@@ -1,0 +1,194 @@
+package ansifilter
+
+import (
+	"strings"
+	"testing"
+)
+
+// TestFragmentOutput checks the inline-style span markup for each format
+// against output captured from ansifilter 2.23.
+func TestFragmentOutput(t *testing.T) {
+	const in = "\033[31mred\033[0m \033[1;32mbold\033[0m \033[38;5;208m256\033[0m " +
+		"\033[38;2;10;20;30mtc\033[0m \033[4mul\033[0m\n"
+
+	tests := []struct {
+		name string
+		typ  OutputType
+		want string
+	}{
+		{
+			name: "html",
+			typ:  HTML,
+			want: `<span style="color:#cd0000;">red</span> ` +
+				`<span style="font-weight:bold;color:#00ff00;">bold</span> ` +
+				`<span style="color:#ff8700;">256</span> ` +
+				`<span style="color:#0a141e;">tc</span> ` +
+				`<span style="text-decoration:underline;">ul</span>` + "\n",
+		},
+		{
+			name: "pango",
+			typ:  PANGO,
+			want: `<span  fgcolor="#cd0000">red</span> ` +
+				`<span  font-weight="bold" fgcolor="#00ff00">bold</span> ` +
+				`<span  fgcolor="#ff8700">256</span> ` +
+				`<span  fgcolor="#0a141e">tc</span> ` +
+				`<span  underline="single">ul</span>` + "\n",
+		},
+		{
+			name: "bbcode",
+			typ:  BBCODE,
+			want: "[color=#cd0000]red[/color] [color=#00ff00][b]bold[/b][/color] " +
+				"[color=#ff8700]256[/color] [color=#0a141e]tc[/color] [u]ul[/u]\n",
+		},
+		{
+			name: "text",
+			typ:  TEXT,
+			want: "red bold 256 tc ul\n",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			g := New(tt.typ)
+			g.SetFragmentCode(true)
+			got := g.GenerateString(in)
+			if got != tt.want {
+				t.Errorf("output mismatch\n got: %q\nwant: %q", got, tt.want)
+			}
+		})
+	}
+}
+
+// TestReverseVideo checks that SGR 7 swaps the colours and marks both as set,
+// which is what produces two explicit colours on an otherwise default style.
+func TestReverseVideo(t *testing.T) {
+	g := New(HTML)
+	g.SetFragmentCode(true)
+	got := g.GenerateString("\033[7mrev\033[0m\n")
+	want := `<span style="color:#000000;background-color:#000000;">rev</span>` + "\n"
+	if got != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
+}
+
+// TestEmptySGRField checks that an empty SGR field repeats the previous code
+// rather than resetting, matching the C++ str2num behaviour.
+func TestEmptySGRField(t *testing.T) {
+	// "31;" leaves the trailing field empty, so the colour stays red.
+	g := New(HTML)
+	g.SetFragmentCode(true)
+	if got := g.GenerateString("\033[31;mx\n"); !strings.Contains(got, "#cd0000") {
+		t.Errorf("empty trailing field should keep the previous code, got %q", got)
+	}
+	// A lone ";" yields a single empty field, which parses as 0 and resets.
+	g2 := New(HTML)
+	g2.SetFragmentCode(true)
+	if got := g2.GenerateString("\033[;mx\n"); got != "x\n" {
+		t.Errorf("lone semicolon should reset, got %q", got)
+	}
+}
+
+// TestSplitString covers the quirks the SGR parser depends on.
+func TestSplitString(t *testing.T) {
+	tests := []struct {
+		in   string
+		want []string
+	}{
+		{"9;", []string{"9", ""}},
+		{";", []string{""}},
+		{"9;;", []string{"9", ""}},
+		{"31;", []string{"31", ""}},
+		{"", nil},
+		{"1;2;3", []string{"1", "2", "3"}},
+	}
+	for _, tt := range tests {
+		got := splitString(tt.in, ';')
+		if len(got) != len(tt.want) {
+			t.Errorf("splitString(%q) = %q, want %q", tt.in, got, tt.want)
+			continue
+		}
+		for i := range got {
+			if got[i] != tt.want[i] {
+				t.Errorf("splitString(%q) = %q, want %q", tt.in, got, tt.want)
+				break
+			}
+		}
+	}
+}
+
+// TestStr2NumDec covers the empty-string and non-numeric cases separately.
+func TestStr2NumDec(t *testing.T) {
+	v := 9
+	str2numDec(&v, "")
+	if v != 9 {
+		t.Errorf("empty string should leave the value untouched, got %d", v)
+	}
+	str2numDec(&v, "abc")
+	if v != 0 {
+		t.Errorf("non-numeric string should zero the value, got %d", v)
+	}
+	str2numDec(&v, "42")
+	if v != 42 {
+		t.Errorf("got %d, want 42", v)
+	}
+}
+
+// TestSubstrUnderflow checks the C++ length semantics an OSC 8 hyperlink with
+// a malformed terminator relies on.
+func TestSubstrUnderflow(t *testing.T) {
+	s := "abcdef"
+	// A count that underflows selects the rest of the string.
+	if got := substrU(s, 2, ^uint64(0)-5); got != "cdef" {
+		t.Errorf("got %q, want %q", got, "cdef")
+	}
+	if got := substrU(s, 1, 3); got != "bcd" {
+		t.Errorf("got %q, want %q", got, "bcd")
+	}
+}
+
+// TestXterm256 spot-checks the xterm colour cube and gray ramp.
+func TestXterm256(t *testing.T) {
+	g := New(HTML)
+	tests := []struct {
+		idx  byte
+		want string
+	}{
+		{0, "#000000"},
+		{15, "#ffffff"},
+		{208, "#ff8700"},
+		{255, "#eeeeee"},
+	}
+	for _, tt := range tests {
+		if got := rgb2html(g.xterm2rgb(tt.idx)); got != tt.want {
+			t.Errorf("xterm2rgb(%d) = %s, want %s", tt.idx, got, tt.want)
+		}
+	}
+}
+
+// TestHTMLDocument checks the document wrapper and generator comment.
+func TestHTMLDocument(t *testing.T) {
+	g := New(HTML)
+	g.SetEncoding("UTF-8")
+	got := g.GenerateString("hi\n")
+	for _, want := range []string{
+		"<!DOCTYPE html>",
+		`<meta charset="UTF-8">`,
+		"<title>Source file</title>",
+		"</head>\n<body>\n<pre>",
+		"</pre>\n</body>\n</html>\n",
+		"<!--HTML generated by ansifilter " + Version,
+	} {
+		if !strings.Contains(got, want) {
+			t.Errorf("output missing %q", want)
+		}
+	}
+}
+
+// TestCarriageReturnOverwrite checks that a CR rewinds the line buffer.
+func TestCarriageReturnOverwrite(t *testing.T) {
+	g := New(TEXT)
+	g.SetFragmentCode(true)
+	if got := g.GenerateString("aaaaaaaaaa\rbbb\n"); got != "bbbaaaaaaa\n" {
+		t.Errorf("got %q, want %q", got, "bbbaaaaaaa\n")
+	}
+}

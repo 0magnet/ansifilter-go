@@ -1,0 +1,123 @@
+package ansifilter
+
+// ElementStyle stores the text formatting state built up from SGR sequences.
+// It is a direct port of the C++ ElementStyle class.
+type ElementStyle struct {
+	fgColour, bgColour             StyleColour
+	bold, italic, underline, blink bool
+	reset                          bool
+	isNegativeMode, conceal        bool
+	bgColorSet, fgColorSet         bool
+	fgColID, bgColID               int
+}
+
+// newElementStyle returns a style in the default (reset) state.
+func newElementStyle() ElementStyle {
+	return ElementStyle{reset: true, fgColID: 0, bgColID: -1}
+}
+
+// IsItalic reports whether italic is set.
+func (e *ElementStyle) IsItalic() bool { return e.italic }
+
+// IsBlink reports whether blink is set.
+func (e *ElementStyle) IsBlink() bool { return e.blink }
+
+// IsBold reports whether bold is set.
+func (e *ElementStyle) IsBold() bool { return e.bold }
+
+// IsUnderline reports whether underline is set.
+func (e *ElementStyle) IsUnderline() bool { return e.underline }
+
+// IsConceal reports whether conceal is set.
+func (e *ElementStyle) IsConceal() bool { return e.conceal }
+
+// IsBgColorSet reports whether a background colour was assigned.
+func (e *ElementStyle) IsBgColorSet() bool { return e.bgColorSet }
+
+// IsFgColorSet reports whether a foreground colour was assigned.
+func (e *ElementStyle) IsFgColorSet() bool { return e.fgColorSet }
+
+// IsReset reports whether the style is in its default state.
+func (e *ElementStyle) IsReset() bool { return e.reset }
+
+// FgColour returns the foreground colour.
+func (e *ElementStyle) FgColour() StyleColour { return e.fgColour }
+
+// BgColour returns the background colour.
+func (e *ElementStyle) BgColour() StyleColour { return e.bgColour }
+
+func (e *ElementStyle) setBold(b bool)      { e.bold = b }
+func (e *ElementStyle) setItalic(b bool)    { e.italic = b }
+func (e *ElementStyle) setUnderline(b bool) { e.underline = b }
+func (e *ElementStyle) setBlink(b bool)     { e.blink = b }
+func (e *ElementStyle) setConceal(b bool)   { e.conceal = b }
+
+func (e *ElementStyle) setFgColourStr(rgb string) {
+	e.fgColour.SetRGB(rgb)
+	e.fgColorSet = true
+}
+
+func (e *ElementStyle) setBgColourStr(rgb string) {
+	e.bgColour.SetRGB(rgb)
+	e.bgColorSet = true
+}
+
+func (e *ElementStyle) setFgColour(c StyleColour) {
+	e.fgColour = c
+	e.fgColorSet = true
+}
+
+func (e *ElementStyle) setBgColour(c StyleColour) {
+	e.bgColour = c
+	e.bgColorSet = true
+}
+
+func (e *ElementStyle) setFgColourID(id int) { e.fgColID = id }
+func (e *ElementStyle) setBgColourID(id int) { e.bgColID = id }
+
+// FgColourID returns the RTF colour table index of the foreground colour.
+func (e *ElementStyle) FgColourID() int { return e.fgColID }
+
+// BgColourID returns the RTF colour table index of the background colour.
+func (e *ElementStyle) BgColourID() int { return e.bgColID }
+
+// imageMode swaps foreground and background colours for reverse video (SGR 7
+// and 27). The swap only happens on a genuine change of mode, and assigning
+// the swapped colours marks both as explicitly set — which is why a reverse
+// sequence on an otherwise default style emits two black colours.
+func (e *ElementStyle) imageMode(negative bool) {
+	if negative != e.isNegativeMode {
+		swap := e.FgColour()
+		e.setFgColour(e.BgColour())
+		e.setBgColour(swap)
+		e.isNegativeMode = !e.isNegativeMode
+	}
+}
+
+// setReset marks the style as default and clears every attribute.
+func (e *ElementStyle) setReset(b bool) {
+	e.reset = b
+	if e.reset {
+		e.setFgColourStr("#000000")
+		e.setFgColourID(0)
+		e.setBgColourID(-1)
+		e.bold = false
+		e.italic = false
+		e.underline = false
+		e.conceal = false
+		e.blink = false
+		e.bgColorSet = false
+		e.fgColorSet = false
+	}
+}
+
+// styleInfo is a comparable snapshot of a style, used to build the derived
+// stylesheet emitted by --derived-styles.
+type styleInfo struct {
+	fgColor, bgColor string
+	isBold           bool
+	isItalic         bool
+	isConcealed      bool
+	isBlink          bool
+	isUnderLine      bool
+}

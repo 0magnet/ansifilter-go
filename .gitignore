@@ -1,0 +1,4 @@
+# build output (the package dir is also named ansifilter/, so match the file only)
+/ansifilter.bin
+/cmd/ansifilter/ansifilter
+*.test
