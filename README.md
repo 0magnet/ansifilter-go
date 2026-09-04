@@ -117,3 +117,33 @@ GPL-3.0-or-later, inherited from ansifilter. See `LICENSE`.
 
 Original ansifilter is copyright © 2007-2026 André Simon
 <a.simon@mailbox.org>, <http://andre-simon.de/>.
+
+## Dependency Graph
+
+Made with [goda](https://github.com/loov/goda):
+
+```
+go run github.com/loov/goda@latest graph github.com/0magnet/ansifilter-go/... | dot -Tsvg -o docs/ansifilter-go-goda-graph.svg
+```
+
+![Dependency Graph](docs/ansifilter-go-goda-graph.svg "github.com/0magnet/ansifilter-go Dependency Graph")
+
+## Lines of Code
+
+Made with [gocloc](https://github.com/hhatto/gocloc) (excludes `vendor/`, `node_modules/`, `.git/`):
+
+```
+gocloc --not-match-d='(vendor|node_modules|\.git)' .
+```
+
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Go                              15            384            346           3597
+YAML                             1              0              7             98
+Markdown                         1             31              0             88
+-------------------------------------------------------------------------------
+TOTAL                           17            415            353           3783
+-------------------------------------------------------------------------------
+```
