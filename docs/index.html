@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='3' width='14' height='10' rx='2' fill='none' stroke='%238ae234' stroke-width='1.4'/%3E%3C/svg%3E">
+<title>ansifilter-go — ANSI escape codes into HTML, SVG, LaTeX and more</title>
+<style>
+  html, body { margin: 0; min-height: 100%; background: #10131a; color: #d3d7cf; }
+  body { font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+         padding: 20px; box-sizing: border-box; }
+  .row { display: flex; gap: 14px; align-items: baseline; margin-bottom: 10px; }
+  select { background: #171b24; color: #d3d7cf; border: 1px solid #2b3240;
+           border-radius: 4px; padding: 6px 8px; font: inherit; }
+  textarea { width: 100%; box-sizing: border-box; height: 150px; resize: vertical;
+             background: #0b0e14; color: #d3d7cf; border: 1px solid #2b3240;
+             border-radius: 4px; padding: 10px 12px; font: inherit; }
+  textarea:focus, select:focus { outline: none; border-color: #729fcf; }
+  h2 { font-size: 11px; font-weight: normal; color: #6b7280; margin: 18px 0 6px;
+       text-transform: uppercase; letter-spacing: .08em; }
+  pre { margin: 0; padding: 12px; background: #0b0e14; border: 1px solid #1d222c;
+        border-radius: 4px; overflow-x: auto; white-space: pre-wrap;
+        word-break: break-word; max-height: 320px; overflow-y: auto; }
+  /* The rendered half. ansifilter emits colours as inline styles against a
+     light page, so the preview gets a light ground rather than the dark one
+     the rest of this page uses — otherwise black-on-black. */
+  #prev { background: #fdfdfc; color: #111; padding: 12px; border-radius: 4px;
+          border: 1px solid #1d222c; overflow-x: auto; }
+  #prev pre { background: none; border: none; padding: 0; }
+  .hint { color: #6b7280; }
+</style>
+</head>
+<body>
+<div class="row">
+  <label for="fmt">output</label>
+  <select id="fmt" aria-label="output format"></select>
+  <span class="hint">— type <code>\e</code> or <code>\033</code> for the escape byte</span>
+</div>
+<textarea id="in" spellcheck="false" aria-label="ANSI input">\e[1;36mansifilter-go\e[0m — \e[32mANSI\e[0m escape codes into markup
+
+\e[31mred\e[0m \e[32mgreen\e[0m \e[33myellow\e[0m \e[34mblue\e[0m \e[35mmagenta\e[0m \e[36mcyan\e[0m
+\e[1mbold\e[0m \e[3mitalic\e[0m \e[4munderline\e[0m \e[7mreverse\e[0m
+\e[38;5;208m256-colour\e[0m \e[38;2;120;200;255mtruecolour\e[0m
+</textarea>
+<div id="prevwrap">
+  <h2>rendered</h2>
+  <div id="prev"></div>
+</div>
+<h2>generated markup</h2>
+<pre id="src">loading…</pre>
+<script src="wasm_exec.js"></script>
+<script>
+  const go = new Go();
+  WebAssembly.instantiateStreaming(fetch("ansifilter.wasm"), go.importObject)
+    .then((r) => go.run(r.instance))
+    .catch((e) => { document.getElementById("src").textContent = "failed to load: " + e; });
+</script>
+</body>
+</html>
