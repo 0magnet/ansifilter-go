@@ -4,9 +4,23 @@ A Go port of [ansifilter](https://gitlab.com/saalen/ansifilter) 2.23 by André
 Simon. It converts text containing ANSI terminal escape codes into text, HTML,
 Pango markup, LaTeX, plain TeX, RTF, BBCode or SVG.
 
-**[Live demo](https://0magnet.github.io/ansifilter-go/)** — paste escape codes and see three things at once: the input as a terminal shows it, the chosen format rendered, and the markup it generated.
+**[Live demo](https://0magnet.github.io/ansifilter-go/)** — the same input in both renderers at once: the ANSI in a real terminal, the exported HTML in a real browser.
 
-![ansifilter-go in the browser](docs/ansifilter-go-demo.png "the same input as a terminal shows it, as the exported HTML renders, and the markup between them")
+![ansifilter-go in the browser](docs/ansifilter-go-demo.png "three windows on a desk: the ANSI input, a websh terminal showing it rendered, and netscrape showing the exported HTML")
+
+The two halves of this tool are escape codes going in and markup coming out,
+and a page that draws its own approximation of either is showing the
+approximation. So the demo is a [desk](https://github.com/0magnet/desk): the
+terminal is [websh](https://github.com/0magnet/websh) on
+[xterm-go](https://github.com/0magnet/xterm-go), the browser is
+[netscrape](https://github.com/0magnet/netscrape), and each renders the same
+input its own way in a window of its own. The input is written into the
+shell's filesystem, which is why the terminal can `cat` it — nothing is being
+simulated for the demo's benefit.
+
+It lives in its own module under `demo/`, so none of that reaches this
+library: `go.mod` here still has no dependencies, and the graph below is still
+the port's own.
 
 The port is **byte-exact**: for every input and option combination tested it
 produces output identical to the C++ original.
