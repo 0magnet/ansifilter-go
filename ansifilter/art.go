@@ -72,8 +72,8 @@ func (g *Generator) parseBinFile() {
 			colBg -= 8
 		}
 
-		g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[colFg]))
-		g.elementStyle.setBgColourStr(rgb2html(g.workingPalette[colBg]))
+		g.elementStyle.setFgColorStr(rgb2html(g.workingPalette[colFg]))
+		g.elementStyle.setBgColorStr(rgb2html(g.workingPalette[colBg]))
 		g.elementStyle.setBold(cur >= 0x20 && cur <= 0x7a)
 
 		if g.curX < g.asciiArtWidth && g.curY < g.asciiArtHeight {
@@ -179,8 +179,8 @@ func (g *Generator) parseXBinFile() {
 					return
 				}
 
-				g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[colFg]))
-				g.elementStyle.setBgColourStr(rgb2html(g.workingPalette[colBg]))
+				g.elementStyle.setFgColorStr(rgb2html(g.workingPalette[colFg]))
+				g.elementStyle.setBgColorStr(rgb2html(g.workingPalette[colBg]))
 				g.elementStyle.setBold(cur >= 0x20 && cur <= 0x7a)
 
 				if g.curX < g.asciiArtWidth && g.curY < g.asciiArtHeight {
@@ -281,8 +281,8 @@ func (g *Generator) parseTundraFile() {
 		}
 
 		if cur != 1 && cur != 2 && cur != 4 && cur != 6 {
-			g.elementStyle.setFgColourStr(rgb2htmlInts(fgRed, fgGreen, fgBlue))
-			g.elementStyle.setBgColourStr(rgb2htmlInts(bgRed, bgGreen, bgBlue))
+			g.elementStyle.setFgColorStr(rgb2htmlInts(fgRed, fgGreen, fgBlue))
+			g.elementStyle.setBgColorStr(rgb2htmlInts(bgRed, bgGreen, bgBlue))
 
 			idx := g.curX + g.curY*g.asciiArtWidth
 			if idx < uint32(len(g.termBuffer)) {

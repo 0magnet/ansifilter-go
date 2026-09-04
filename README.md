@@ -32,8 +32,8 @@ the same input, `robert-nix/ansihtml` emits:
 
 | | ansifilter | ansihtml |
 |---|---|---|
-| 16-colour | `color:#cd0000` (xterm hex) | `color:sienna` (CSS name) |
-| 256/truecolour | `#ff8700` | `rgb(255,135,0)` |
+| 16-color | `color:#cd0000` (xterm hex) | `color:sienna` (CSS name) |
+| 256/truecolor | `#ff8700` | `rgb(255,135,0)` |
 | underline | `text-decoration:underline` | `text-decoration-line:underline` |
 | reverse video | swaps to explicit fg/bg | `filter:invert(100%)` |
 | document mode | full HTML + CSS, fragments, anchors, line numbers | spans only |
@@ -59,7 +59,7 @@ ansifilter --art-cp437 -H input.ans > art.html
 
 Run `ansifilter --help` for the full option list. All of the original's
 options are implemented: the eight output formats, ANSI-art modes
-(`--art-cp437`, `--art-bin`, `--art-tundra`), colour maps, line numbers and
+(`--art-cp437`, `--art-bin`, `--art-tundra`), color maps, line numbers and
 anchors, line wrapping, derived stylesheets, tee mode and tail mode.
 
 ## Library
@@ -86,16 +86,16 @@ compiled from the upstream source:
 | Fuzz seeds 1–400 × 17 option sets | 6,800 | all identical |
 | Fuzz seeds 401–2400 × 24 option sets | 48,000 | all identical |
 | ANSI art (`.ans`, `.bin`, XBIN) | 15 | all identical |
-| stdin, colour maps, derived styles, multi-file, tee, `-v`, `-h` | 17 | all identical |
+| stdin, color maps, derived styles, multi-file, tee, `-v`, `-h` | 17 | all identical |
 
-The corpus covers every SGR code, the full 256-colour and truecolour ranges,
+The corpus covers every SGR code, the full 256-color and truecolor ranges,
 carriage-return overwrite, backspace overstrike, OSC 8 hyperlinks, grep-style
 `ESC K` sequences, C1 control bytes, UTF-8 text and real ANSI art. The fuzzer
 generates input biased towards malformed and truncated escape sequences.
 
 ## Notes on fidelity
 
-Several C++ behaviours had to be reproduced deliberately, because ansifilter's
+Several C++ behaviors had to be reproduced deliberately, because ansifilter's
 output depends on them:
 
 - `std::string::substr(pos, count)` takes a *length*; when that length
@@ -109,7 +109,7 @@ output depends on them:
 - The cursor variables used for ANSI art are `unsigned int`, so a cursor-left
   sequence past column zero wraps to a huge value and the bounds check then
   suppresses the write.
-- A default-constructed `ElementStyle` has `reset` set and a background colour
+- A default-constructed `ElementStyle` has `reset` set and a background color
   index of -1, which is what untouched ANSI-art cells carry.
 
 ## Version pinning
@@ -129,7 +129,7 @@ Built that way, full-document output is byte-identical to a stock ansifilter
 2.22. Alternatively `--no-version-info` drops the comment altogether, and `-f`
 (fragment mode) never emits it.
 
-## Licence
+## License
 
 GPL-3.0-or-later, inherited from ansifilter. See `LICENSE`.
 

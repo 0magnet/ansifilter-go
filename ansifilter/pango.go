@@ -30,11 +30,11 @@ func (p *pangoGenerator) openTag() string {
 		fmtStream += ` underline="single"`
 	}
 	if e.IsFgColorSet() {
-		c := e.FgColour()
+		c := e.FgColor()
 		fmtStream += ` fgcolor="#` + c.Red(HTML) + c.Green(HTML) + c.Blue(HTML) + `"`
 	}
 	if e.IsBgColorSet() {
-		c := e.BgColour()
+		c := e.BgColor()
 		fmtStream += ` bgcolor="#` + c.Red(HTML) + c.Green(HTML) + c.Blue(HTML) + `"`
 	}
 

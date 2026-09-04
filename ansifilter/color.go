@@ -34,7 +34,7 @@ var (
 )
 
 // OutputType selects the output format. The values mirror ansifilter's
-// OutputType enum; StyleColour formats its components differently per type.
+// OutputType enum; StyleColor formats its components differently per type.
 type OutputType int
 
 // Supported output formats.
@@ -55,16 +55,16 @@ type RGBVal struct {
 	Red, Green, Blue int
 }
 
-// StyleColour stores a color and renders its components in the notation each
+// StyleColor stores a color and renders its components in the notation each
 // output format expects.
-type StyleColour struct {
+type StyleColor struct {
 	rgb RGBVal
 }
 
-// NewStyleColour parses a color string. It accepts "#rrggbb" as well as three
+// NewStyleColor parses a color string. It accepts "#rrggbb" as well as three
 // whitespace-separated hex components, matching the C++ constructor.
-func NewStyleColour(s string) StyleColour {
-	var c StyleColour
+func NewStyleColor(s string) StyleColor {
+	var c StyleColor
 	c.SetRGB(s)
 	return c
 }
@@ -79,10 +79,10 @@ func hexInt(s string) int {
 	return int(v)
 }
 
-// SetRGB sets the color from a string. The parse mirrors StyleColour::setRGB:
+// SetRGB sets the color from a string. The parse mirrors StyleColor::setRGB:
 // a leading '#' selects "#rrggbb" notation, anything else is read as three
 // separate hex tokens.
-func (c *StyleColour) SetRGB(s string) {
+func (c *StyleColor) SetRGB(s string) {
 	if s == "" {
 		return
 	}
@@ -158,13 +158,13 @@ func component(v int, t OutputType) string {
 }
 
 // Red returns the red component in the notation used by t.
-func (c StyleColour) Red(t OutputType) string { return component(c.rgb.Red, t) }
+func (c StyleColor) Red(t OutputType) string { return component(c.rgb.Red, t) }
 
 // Green returns the green component in the notation used by t.
-func (c StyleColour) Green(t OutputType) string { return component(c.rgb.Green, t) }
+func (c StyleColor) Green(t OutputType) string { return component(c.rgb.Green, t) }
 
 // Blue returns the blue component in the notation used by t.
-func (c StyleColour) Blue(t OutputType) string { return component(c.rgb.Blue, t) }
+func (c StyleColor) Blue(t OutputType) string { return component(c.rgb.Blue, t) }
 
 // valuerange holds the six levels of the xterm 6x6x6 color cube.
 var valuerange = [6]byte{0x00, 0x5F, 0x87, 0xAF, 0xD7, 0xFF}

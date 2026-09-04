@@ -329,7 +329,7 @@ func (g *Generator) SetColorMap(path string) error {
 
 // SetDefaultForegroundColor sets the foreground to palette entry 0.
 func (g *Generator) SetDefaultForegroundColor() {
-	g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[0]))
+	g.elementStyle.setFgColorStr(rgb2html(g.workingPalette[0]))
 }
 
 // ---------------------------------------------------------------------------
@@ -604,7 +604,7 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 			g.elementStyle.setReset(true)
 		case 1:
 			g.elementStyle.setBold(true)
-			g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[8]))
+			g.elementStyle.setFgColorStr(rgb2html(g.workingPalette[8]))
 		case 2: // faint, not represented
 		case 3:
 			g.elementStyle.setItalic(true)
@@ -628,9 +628,9 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 			g.elementStyle.setConceal(false)
 		case 30, 31, 32, 33, 34, 35, 36, 37:
 			if g.elementStyle.IsBold() {
-				g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[ansiCode-30+8]))
+				g.elementStyle.setFgColorStr(rgb2html(g.workingPalette[ansiCode-30+8]))
 			} else {
-				g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[ansiCode-30]))
+				g.elementStyle.setFgColorStr(rgb2html(g.workingPalette[ansiCode-30]))
 			}
 		case 38: // extended foreground color
 			idx++
@@ -644,7 +644,7 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 				}
 				str2numDec(&colorCode, codeVector[idx])
 				rgb := g.xterm2rgb(byte(colorCode))
-				g.elementStyle.setFgColourStr(rgb2html(rgb))
+				g.elementStyle.setFgColorStr(rgb2html(rgb))
 			} else if codeVector[idx] == "2" {
 				idx++
 				if idx >= len(codeVector) {
@@ -664,12 +664,12 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 				}
 				str2numDec(&colorCode, codeVector[idx])
 				colorValues[2] = byte(colorCode & 0xff)
-				g.elementStyle.setFgColourStr(rgb2html(colorValues))
+				g.elementStyle.setFgColorStr(rgb2html(colorValues))
 			}
 		case 39:
 			g.elementStyle.setReset(true)
 		case 40, 41, 42, 43, 44, 45, 46, 47:
-			g.elementStyle.setBgColourStr(rgb2html(g.workingPalette[ansiCode-40]))
+			g.elementStyle.setBgColorStr(rgb2html(g.workingPalette[ansiCode-40]))
 		case 48: // extended background color
 			idx++
 			if idx >= len(codeVector) {
@@ -682,7 +682,7 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 				}
 				str2numDec(&colorCode, codeVector[idx])
 				rgb := g.xterm2rgb(byte(colorCode))
-				g.elementStyle.setBgColourStr(rgb2html(rgb))
+				g.elementStyle.setBgColorStr(rgb2html(rgb))
 			} else if codeVector[idx] == "2" {
 				idx++
 				if idx >= len(codeVector) {
@@ -702,14 +702,14 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 				}
 				str2numDec(&colorCode, codeVector[idx])
 				colorValues[2] = byte(colorCode & 0xff)
-				g.elementStyle.setBgColourStr(rgb2html(colorValues))
+				g.elementStyle.setBgColorStr(rgb2html(colorValues))
 			}
 		case 49:
 			g.elementStyle.setReset(true)
 		case 90, 91, 92, 93, 94, 95, 96, 97: // aixterm bright foreground
-			g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[ansiCode-90+8]))
+			g.elementStyle.setFgColorStr(rgb2html(g.workingPalette[ansiCode-90+8]))
 		case 100, 101, 102, 103, 104, 105, 106, 107: // aixterm bright background
-			g.elementStyle.setBgColourStr(rgb2html(g.workingPalette[ansiCode-100+8]))
+			g.elementStyle.setBgColorStr(rgb2html(g.workingPalette[ansiCode-100+8]))
 		}
 
 		// Record the RTF color table index: eight base colors followed by
@@ -720,13 +720,13 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 			if g.elementStyle.IsBold() {
 				extra = 8
 			}
-			g.elementStyle.setFgColourID(ansiCode - 30 + extra)
+			g.elementStyle.setFgColorID(ansiCode - 30 + extra)
 		case ansiCode >= 90 && ansiCode < 98:
-			g.elementStyle.setFgColourID(ansiCode - 90 + 8)
+			g.elementStyle.setFgColorID(ansiCode - 90 + 8)
 		case ansiCode >= 40 && ansiCode <= 47:
-			g.elementStyle.setBgColourID(ansiCode - 40)
+			g.elementStyle.setBgColorID(ansiCode - 40)
 		case ansiCode >= 100 && ansiCode < 108:
-			g.elementStyle.setBgColourID(ansiCode - 100 + 8)
+			g.elementStyle.setBgColorID(ansiCode - 100 + 8)
 		}
 
 		if idx < len(codeVector) {
@@ -828,7 +828,7 @@ func (g *Generator) printTermBuffer() {
 
 			// A full block takes the foreground color as its background.
 			if g.termBuffer[idx].c == 0xdb {
-				g.elementStyle.setBgColour(g.elementStyle.FgColour())
+				g.elementStyle.setBgColor(g.elementStyle.FgColor())
 			}
 
 			if !g.elementStyle.IsReset() {

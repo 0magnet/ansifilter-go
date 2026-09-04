@@ -3,7 +3,7 @@ package ansifilter
 // ElementStyle stores the text formatting state built up from SGR sequences.
 // It is a direct port of the C++ ElementStyle class.
 type ElementStyle struct {
-	fgColour, bgColour             StyleColour
+	fgColor, bgColor               StyleColor
 	bold, italic, underline, blink bool
 	reset                          bool
 	isNegativeMode, conceal        bool
@@ -40,11 +40,11 @@ func (e *ElementStyle) IsFgColorSet() bool { return e.fgColorSet }
 // IsReset reports whether the style is in its default state.
 func (e *ElementStyle) IsReset() bool { return e.reset }
 
-// FgColour returns the foreground color.
-func (e *ElementStyle) FgColour() StyleColour { return e.fgColour }
+// FgColor returns the foreground color.
+func (e *ElementStyle) FgColor() StyleColor { return e.fgColor }
 
-// BgColour returns the background color.
-func (e *ElementStyle) BgColour() StyleColour { return e.bgColour }
+// BgColor returns the background color.
+func (e *ElementStyle) BgColor() StyleColor { return e.bgColor }
 
 func (e *ElementStyle) setBold(b bool)      { e.bold = b }
 func (e *ElementStyle) setItalic(b bool)    { e.italic = b }
@@ -52,34 +52,34 @@ func (e *ElementStyle) setUnderline(b bool) { e.underline = b }
 func (e *ElementStyle) setBlink(b bool)     { e.blink = b }
 func (e *ElementStyle) setConceal(b bool)   { e.conceal = b }
 
-func (e *ElementStyle) setFgColourStr(rgb string) {
-	e.fgColour.SetRGB(rgb)
+func (e *ElementStyle) setFgColorStr(rgb string) {
+	e.fgColor.SetRGB(rgb)
 	e.fgColorSet = true
 }
 
-func (e *ElementStyle) setBgColourStr(rgb string) {
-	e.bgColour.SetRGB(rgb)
+func (e *ElementStyle) setBgColorStr(rgb string) {
+	e.bgColor.SetRGB(rgb)
 	e.bgColorSet = true
 }
 
-func (e *ElementStyle) setFgColour(c StyleColour) {
-	e.fgColour = c
+func (e *ElementStyle) setFgColor(c StyleColor) {
+	e.fgColor = c
 	e.fgColorSet = true
 }
 
-func (e *ElementStyle) setBgColour(c StyleColour) {
-	e.bgColour = c
+func (e *ElementStyle) setBgColor(c StyleColor) {
+	e.bgColor = c
 	e.bgColorSet = true
 }
 
-func (e *ElementStyle) setFgColourID(id int) { e.fgColID = id }
-func (e *ElementStyle) setBgColourID(id int) { e.bgColID = id }
+func (e *ElementStyle) setFgColorID(id int) { e.fgColID = id }
+func (e *ElementStyle) setBgColorID(id int) { e.bgColID = id }
 
-// FgColourID returns the RTF color table index of the foreground color.
-func (e *ElementStyle) FgColourID() int { return e.fgColID }
+// FgColorID returns the RTF color table index of the foreground color.
+func (e *ElementStyle) FgColorID() int { return e.fgColID }
 
-// BgColourID returns the RTF color table index of the background color.
-func (e *ElementStyle) BgColourID() int { return e.bgColID }
+// BgColorID returns the RTF color table index of the background color.
+func (e *ElementStyle) BgColorID() int { return e.bgColID }
 
 // imageMode swaps foreground and background colors for reverse video (SGR 7
 // and 27). The swap only happens on a genuine change of mode, and assigning
@@ -87,9 +87,9 @@ func (e *ElementStyle) BgColourID() int { return e.bgColID }
 // sequence on an otherwise default style emits two black colors.
 func (e *ElementStyle) imageMode(negative bool) {
 	if negative != e.isNegativeMode {
-		swap := e.FgColour()
-		e.setFgColour(e.BgColour())
-		e.setBgColour(swap)
+		swap := e.FgColor()
+		e.setFgColor(e.BgColor())
+		e.setBgColor(swap)
 		e.isNegativeMode = !e.isNegativeMode
 	}
 }
@@ -98,9 +98,9 @@ func (e *ElementStyle) imageMode(negative bool) {
 func (e *ElementStyle) setReset(b bool) {
 	e.reset = b
 	if e.reset {
-		e.setFgColourStr("#000000")
-		e.setFgColourID(0)
-		e.setBgColourID(-1)
+		e.setFgColorStr("#000000")
+		e.setFgColorID(0)
+		e.setBgColorID(-1)
 		e.bold = false
 		e.italic = false
 		e.underline = false

@@ -26,11 +26,11 @@ func (g *Generator) dynStyleClass() string {
 	e := &g.elementStyle
 	var fg, bg string
 	if e.IsFgColorSet() {
-		c := e.FgColour()
+		c := e.FgColor()
 		fg = c.Red(HTML) + c.Green(HTML) + c.Blue(HTML)
 	}
 	if e.IsBgColorSet() {
-		c := e.BgColour()
+		c := e.BgColor()
 		bg = c.Red(HTML) + c.Green(HTML) + c.Blue(HTML)
 	}
 	si := styleInfo{
@@ -73,11 +73,11 @@ func (g *Generator) inlineStyle(colorProp string, withBg bool) string {
 		s += "display:none;"
 	}
 	if e.IsFgColorSet() {
-		c := e.FgColour()
+		c := e.FgColor()
 		s += colorProp + ":#" + c.Red(HTML) + c.Green(HTML) + c.Blue(HTML) + ";"
 	}
 	if withBg && e.IsBgColorSet() {
-		c := e.BgColour()
+		c := e.BgColor()
 		s += "background-color:#" + c.Red(HTML) + c.Green(HTML) + c.Blue(HTML) + ";"
 	}
 	return s

@@ -17,7 +17,7 @@ func (b *bbcodeGenerator) openTag() string {
 	e := &b.elementStyle
 
 	if e.IsFgColorSet() {
-		c := e.FgColour()
+		c := e.FgColor()
 		s += "[color=#" + c.Red(HTML) + c.Green(HTML) + c.Blue(HTML) + "]"
 	}
 	if e.IsBold() {

@@ -27,7 +27,7 @@ func (l *latexGenerator) openTag() string {
 		s += "\\itshape{}"
 	}
 	if e.IsFgColorSet() {
-		c := e.FgColour()
+		c := e.FgColor()
 		s += "\\color[rgb]{" + c.Red(LATEX) + "," + c.Green(LATEX) + "," + c.Blue(LATEX) + "}"
 	}
 	return "{" + s

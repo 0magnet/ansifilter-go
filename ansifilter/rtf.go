@@ -48,18 +48,18 @@ func (g *Generator) SetPageSize(ps string) {
 }
 
 // getAttributes renders one entry of the RTF color table.
-func getAttributes(col StyleColour) string {
+func getAttributes(col StyleColor) string {
 	return "\\red" + col.Red(RTF) + "\\green" + col.Green(RTF) + "\\blue" + col.Blue(RTF) + ";"
 }
 
 func (r *rtfGenerator) openTag() string {
 	var s string
 	e := &r.elementStyle
-	if e.FgColourID() >= 0 {
-		s += "{\\cf" + strconv.Itoa(e.FgColourID()+1)
+	if e.FgColorID() >= 0 {
+		s += "{\\cf" + strconv.Itoa(e.FgColorID()+1)
 	}
-	if e.BgColourID() >= 0 {
-		s += "\\chcbpat" + strconv.Itoa(e.BgColourID()+1)
+	if e.BgColorID() >= 0 {
+		s += "\\chcbpat" + strconv.Itoa(e.BgColorID()+1)
 	}
 	s += "{"
 	if !r.parseCP437 && e.IsBold() {
@@ -111,7 +111,7 @@ func (r *rtfGenerator) body() {
 	r.write(";}}")
 	r.write("{\\colortbl;")
 	for _, i := range r.workingPalette {
-		r.write(getAttributes(NewStyleColour(rgb2html(i))))
+		r.write(getAttributes(NewStyleColor(rgb2html(i))))
 	}
 	r.write("}\n")
 

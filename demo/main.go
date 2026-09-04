@@ -135,9 +135,9 @@ func main() {
 	// Tiled rather than cascaded: the point is seeing the three at once.
 	w, h := deskSize()
 	half := w / 2
-	desk.LaunchOpts("input", desk.Options{X: 8, Y: 8, Width: half - 16, Height: h/2 - 16})       //nolint:errcheck
-	desk.LaunchOpts("term", desk.Options{X: 8, Y: h / 2, Width: half - 16, Height: h/2 - 16})    //nolint:errcheck
-	desk.LaunchOpts("browser", desk.Options{X: half, Y: 8, Width: half - 16, Height: h - 24})    //nolint:errcheck
+	desk.LaunchOpts("input", desk.Options{X: 8, Y: 8, Width: half - 16, Height: h/2 - 16})    //nolint:errcheck
+	desk.LaunchOpts("term", desk.Options{X: 8, Y: h / 2, Width: half - 16, Height: h/2 - 16}) //nolint:errcheck
+	desk.LaunchOpts("browser", desk.Options{X: half, Y: 8, Width: half - 16, Height: h - 24}) //nolint:errcheck
 
 	select {}
 }

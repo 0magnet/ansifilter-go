@@ -53,7 +53,7 @@ func (t *texGenerator) openTag() string {
 	if e.IsItalic() {
 		s += "\\it"
 	}
-	c := e.FgColour()
+	c := e.FgColor()
 	s += "\\textColor{" + c.Red(TEX) + " " + c.Green(TEX) + " " + c.Blue(TEX) + " 0}"
 	return "{" + s
 }
