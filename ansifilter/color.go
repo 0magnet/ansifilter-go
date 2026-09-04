@@ -50,18 +50,18 @@ const (
 	SVG
 )
 
-// RGBVal holds a colour's components as integers in 0..255.
+// RGBVal holds a color's components as integers in 0..255.
 type RGBVal struct {
 	Red, Green, Blue int
 }
 
-// StyleColour stores a colour and renders its components in the notation each
+// StyleColour stores a color and renders its components in the notation each
 // output format expects.
 type StyleColour struct {
 	rgb RGBVal
 }
 
-// NewStyleColour parses a colour string. It accepts "#rrggbb" as well as three
+// NewStyleColour parses a color string. It accepts "#rrggbb" as well as three
 // whitespace-separated hex components, matching the C++ constructor.
 func NewStyleColour(s string) StyleColour {
 	var c StyleColour
@@ -79,7 +79,7 @@ func hexInt(s string) int {
 	return int(v)
 }
 
-// SetRGB sets the colour from a string. The parse mirrors StyleColour::setRGB:
+// SetRGB sets the color from a string. The parse mirrors StyleColour::setRGB:
 // a leading '#' selects "#rrggbb" notation, anything else is read as three
 // separate hex tokens.
 func (c *StyleColour) SetRGB(s string) {
@@ -126,7 +126,7 @@ func int2strHex(n int) string {
 	return s
 }
 
-// int2strDec renders n as at least two decimal digits, zero padded. RTF colour
+// int2strDec renders n as at least two decimal digits, zero padded. RTF color
 // tables use this, so "5" becomes "05" exactly as the C++ ostream does.
 func int2strDec(n int) string {
 	s := strconv.FormatInt(int64(n), 10)
@@ -143,7 +143,7 @@ func float2str(v float64) string {
 	return strconv.FormatFloat(r, 'g', -1, 64)
 }
 
-// component renders a single colour component for the given output type.
+// component renders a single color component for the given output type.
 func component(v int, t OutputType) string {
 	switch t {
 	case RTF:
@@ -166,10 +166,10 @@ func (c StyleColour) Green(t OutputType) string { return component(c.rgb.Green, 
 // Blue returns the blue component in the notation used by t.
 func (c StyleColour) Blue(t OutputType) string { return component(c.rgb.Blue, t) }
 
-// valuerange holds the six levels of the xterm 6x6x6 colour cube.
+// valuerange holds the six levels of the xterm 6x6x6 color cube.
 var valuerange = [6]byte{0x00, 0x5F, 0x87, 0xAF, 0xD7, 0xFF}
 
-// DefaultPalette is the built-in 16 colour ANSI palette.
+// DefaultPalette is the built-in 16 color ANSI palette.
 var DefaultPalette = [16][3]byte{
 	{0x00, 0x00, 0x00}, // 0 black
 	{0xCD, 0x00, 0x00}, // 1 red
@@ -189,11 +189,11 @@ var DefaultPalette = [16][3]byte{
 	{0xFF, 0xFF, 0xFF}, // 15 bright white
 }
 
-// xterm2rgb maps an xterm 256 colour index onto RGB, using the generator's
+// xterm2rgb maps an xterm 256 color index onto RGB, using the generator's
 // working palette for the first 16 entries.
 //
 // The branch bounds below are those of the original: index 232 is handled by
-// the colour cube, and only 233 and above are treated as grays.
+// the color cube, and only 233 and above are treated as grays.
 func (g *Generator) xterm2rgb(color byte) [3]byte {
 	var rgb [3]byte
 	if color < 16 {

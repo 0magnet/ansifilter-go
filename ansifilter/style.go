@@ -31,19 +31,19 @@ func (e *ElementStyle) IsUnderline() bool { return e.underline }
 // IsConceal reports whether conceal is set.
 func (e *ElementStyle) IsConceal() bool { return e.conceal }
 
-// IsBgColorSet reports whether a background colour was assigned.
+// IsBgColorSet reports whether a background color was assigned.
 func (e *ElementStyle) IsBgColorSet() bool { return e.bgColorSet }
 
-// IsFgColorSet reports whether a foreground colour was assigned.
+// IsFgColorSet reports whether a foreground color was assigned.
 func (e *ElementStyle) IsFgColorSet() bool { return e.fgColorSet }
 
 // IsReset reports whether the style is in its default state.
 func (e *ElementStyle) IsReset() bool { return e.reset }
 
-// FgColour returns the foreground colour.
+// FgColour returns the foreground color.
 func (e *ElementStyle) FgColour() StyleColour { return e.fgColour }
 
-// BgColour returns the background colour.
+// BgColour returns the background color.
 func (e *ElementStyle) BgColour() StyleColour { return e.bgColour }
 
 func (e *ElementStyle) setBold(b bool)      { e.bold = b }
@@ -75,16 +75,16 @@ func (e *ElementStyle) setBgColour(c StyleColour) {
 func (e *ElementStyle) setFgColourID(id int) { e.fgColID = id }
 func (e *ElementStyle) setBgColourID(id int) { e.bgColID = id }
 
-// FgColourID returns the RTF colour table index of the foreground colour.
+// FgColourID returns the RTF color table index of the foreground color.
 func (e *ElementStyle) FgColourID() int { return e.fgColID }
 
-// BgColourID returns the RTF colour table index of the background colour.
+// BgColourID returns the RTF color table index of the background color.
 func (e *ElementStyle) BgColourID() int { return e.bgColID }
 
-// imageMode swaps foreground and background colours for reverse video (SGR 7
+// imageMode swaps foreground and background colors for reverse video (SGR 7
 // and 27). The swap only happens on a genuine change of mode, and assigning
-// the swapped colours marks both as explicitly set — which is why a reverse
-// sequence on an otherwise default style emits two black colours.
+// the swapped colors marks both as explicitly set — which is why a reverse
+// sequence on an otherwise default style emits two black colors.
 func (e *ElementStyle) imageMode(negative bool) {
 	if negative != e.isNegativeMode {
 		swap := e.FgColour()

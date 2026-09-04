@@ -53,7 +53,7 @@ func (g *Generator) dynStyleClass() string {
 
 // inlineStyle renders the current style as CSS declarations. colorProp selects
 // the property used for the foreground ("color" for HTML, "fill" for SVG); when
-// withBg is false the background colour is omitted.
+// withBg is false the background color is omitted.
 func (g *Generator) inlineStyle(colorProp string, withBg bool) string {
 	e := &g.elementStyle
 	var s string

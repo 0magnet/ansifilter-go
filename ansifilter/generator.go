@@ -144,7 +144,7 @@ type Generator struct {
 	documentStyles []styleInfo
 }
 
-// newGenerator initialises the fields the C++ constructor sets.
+// newGenerator initializes the fields the C++ constructor sets.
 func newGenerator(t OutputType) *Generator {
 	return &Generator{
 		outputType:         t,
@@ -333,7 +333,7 @@ func (g *Generator) SetDefaultForegroundColor() {
 }
 
 // ---------------------------------------------------------------------------
-// Default (base class) formatter behaviour
+// Default (base class) formatter behavior
 // ---------------------------------------------------------------------------
 
 // maskCP437Char falls back to the format's ordinary character masking.
@@ -524,7 +524,7 @@ func splitString(s string, delim byte) []string {
 }
 
 // str2numDec ports StringTools::str2num<int>(val, s, std::dec) including the
-// behaviour the parser depends on: extracting from an empty (or all
+// behavior the parser depends on: extracting from an empty (or all
 // whitespace) string leaves val untouched, so an empty SGR field repeats the
 // previous code, whereas a non-numeric string sets val to zero.
 func str2numDec(val *int, s string) {
@@ -632,7 +632,7 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 			} else {
 				g.elementStyle.setFgColourStr(rgb2html(g.workingPalette[ansiCode-30]))
 			}
-		case 38: // extended foreground colour
+		case 38: // extended foreground color
 			idx++
 			if idx >= len(codeVector) {
 				break
@@ -670,7 +670,7 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 			g.elementStyle.setReset(true)
 		case 40, 41, 42, 43, 44, 45, 46, 47:
 			g.elementStyle.setBgColourStr(rgb2html(g.workingPalette[ansiCode-40]))
-		case 48: // extended background colour
+		case 48: // extended background color
 			idx++
 			if idx >= len(codeVector) {
 				break
@@ -712,7 +712,7 @@ func (g *Generator) parseSGRParameters(line string, begin, end uint64) {
 			g.elementStyle.setBgColourStr(rgb2html(g.workingPalette[ansiCode-100+8]))
 		}
 
-		// Record the RTF colour table index: eight base colours followed by
+		// Record the RTF color table index: eight base colors followed by
 		// eight bright ones.
 		switch {
 		case ansiCode >= 30 && ansiCode <= 37:
@@ -803,7 +803,7 @@ func (g *Generator) parseCodePage437Seq(line string, begin, end uint64) {
 
 // allocateTermBuffer sizes the virtual console buffer. Every cell starts with a
 // default-constructed style: Go's zero value would leave reset false and the
-// background colour index at 0, so untouched cells would emit tags that the
+// background color index at 0, so untouched cells would emit tags that the
 // C++ original does not.
 func (g *Generator) allocateTermBuffer() {
 	g.termBuffer = make([]tdChar, g.asciiArtWidth*g.asciiArtHeight)
@@ -826,7 +826,7 @@ func (g *Generator) printTermBuffer() {
 			}
 			g.elementStyle = g.termBuffer[idx].style
 
-			// A full block takes the foreground colour as its background.
+			// A full block takes the foreground color as its background.
 			if g.termBuffer[idx].c == 0xdb {
 				g.elementStyle.setBgColour(g.elementStyle.FgColour())
 			}

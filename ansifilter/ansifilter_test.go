@@ -59,8 +59,8 @@ func TestFragmentOutput(t *testing.T) {
 	}
 }
 
-// TestReverseVideo checks that SGR 7 swaps the colours and marks both as set,
-// which is what produces two explicit colours on an otherwise default style.
+// TestReverseVideo checks that SGR 7 swaps the colors and marks both as set,
+// which is what produces two explicit colors on an otherwise default style.
 func TestReverseVideo(t *testing.T) {
 	g := New(HTML)
 	g.SetFragmentCode(true)
@@ -72,9 +72,9 @@ func TestReverseVideo(t *testing.T) {
 }
 
 // TestEmptySGRField checks that an empty SGR field repeats the previous code
-// rather than resetting, matching the C++ str2num behaviour.
+// rather than resetting, matching the C++ str2num behavior.
 func TestEmptySGRField(t *testing.T) {
-	// "31;" leaves the trailing field empty, so the colour stays red.
+	// "31;" leaves the trailing field empty, so the color stays red.
 	g := New(HTML)
 	g.SetFragmentCode(true)
 	if got := g.GenerateString("\033[31;mx\n"); !strings.Contains(got, "#cd0000") {
@@ -146,7 +146,7 @@ func TestSubstrUnderflow(t *testing.T) {
 	}
 }
 
-// TestXterm256 spot-checks the xterm colour cube and gray ramp.
+// TestXterm256 spot-checks the xterm color cube and gray ramp.
 func TestXterm256(t *testing.T) {
 	g := New(HTML)
 	tests := []struct {

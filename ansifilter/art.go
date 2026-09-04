@@ -206,7 +206,7 @@ func (g *Generator) parseXBinFile() {
 	}
 }
 
-// parseTundraFile decodes a Tundra 24 bit colour image.
+// parseTundraFile decodes a Tundra 24 bit color image.
 func (g *Generator) parseTundraFile() {
 	head, ok := g.readN(9)
 	if !ok || string(head) != "\x18TUNDRA24" {

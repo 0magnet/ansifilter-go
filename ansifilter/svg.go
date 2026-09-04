@@ -28,7 +28,7 @@ func (s *svgGenerator) openTag() string {
 		attrName = "class"
 		fmtStream = s.dynStyleClass()
 	} else {
-		// SVG paints text with fill and carries no background colour.
+		// SVG paints text with fill and carries no background color.
 		fmtStream = s.inlineStyle("fill", false)
 	}
 
@@ -79,7 +79,7 @@ func (s *svgGenerator) header() string {
 }
 
 func (s *svgGenerator) body() {
-	// The rect supplies the background colour.
+	// The rect supplies the background color.
 	s.write("<g>\n<rect x=\"0\" y=\"0\" width=\"100%\" height=\"100%\"/>")
 	fontSizeSVG := 10
 	if v := atoiC(s.fontSize); v != 0 {

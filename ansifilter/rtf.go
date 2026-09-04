@@ -47,7 +47,7 @@ func (g *Generator) SetPageSize(ps string) {
 	}
 }
 
-// getAttributes renders one entry of the RTF colour table.
+// getAttributes renders one entry of the RTF color table.
 func getAttributes(col StyleColour) string {
 	return "\\red" + col.Red(RTF) + "\\green" + col.Green(RTF) + "\\blue" + col.Blue(RTF) + ";"
 }
