@@ -21,12 +21,20 @@
   pre { margin: 0; padding: 12px; background: #0b0e14; border: 1px solid #1d222c;
         border-radius: 4px; overflow-x: auto; white-space: pre-wrap;
         word-break: break-word; max-height: 320px; overflow-y: auto; }
-  /* The rendered half. ansifilter emits colours as inline styles against a
-     light page, so the preview gets a light ground rather than the dark one
-     the rest of this page uses — otherwise black-on-black. */
+  /* Two renderings of the same input. The terminal one is on a dark ground,
+     because that is where the escape codes were meant to land: ansifilter
+     colours only what the text colours, so default text inherits from here
+     and reads light, as it would in a terminal. The export preview gets a
+     light ground instead, which is the page ansifilter writes its HTML for —
+     on dark, its black default text would vanish. */
+  #term { background: #0b0e14; color: #d3d7cf; padding: 12px; border-radius: 4px;
+          border: 1px solid #1d222c; overflow-x: auto; white-space: pre-wrap; }
+  /* Both panes preserve newlines. The fragment ansifilter emits has no <pre>
+     of its own — its full document supplies one — so the host page has to,
+     or every line runs into the next and the preview lies about the output. */
   #prev { background: #fdfdfc; color: #111; padding: 12px; border-radius: 4px;
-          border: 1px solid #1d222c; overflow-x: auto; }
-  #prev pre { background: none; border: none; padding: 0; }
+          border: 1px solid #1d222c; overflow-x: auto; white-space: pre-wrap; }
+  #term pre, #prev pre { background: none; border: none; padding: 0; }
   .hint { color: #6b7280; }
 </style>
 </head>
@@ -42,8 +50,10 @@
 \e[1mbold\e[0m \e[3mitalic\e[0m \e[4munderline\e[0m \e[7mreverse\e[0m
 \e[38;5;208m256-colour\e[0m \e[38;2;120;200;255mtruecolour\e[0m
 </textarea>
+<h2>as a terminal shows it</h2>
+<div id="term"></div>
 <div id="prevwrap">
-  <h2>rendered</h2>
+  <h2 id="prevlabel">as the exported HTML renders</h2>
   <div id="prev"></div>
 </div>
 <h2>generated markup</h2>

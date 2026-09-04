@@ -4,9 +4,9 @@ A Go port of [ansifilter](https://gitlab.com/saalen/ansifilter) 2.23 by André
 Simon. It converts text containing ANSI terminal escape codes into text, HTML,
 Pango markup, LaTeX, plain TeX, RTF, BBCode or SVG.
 
-**[Live demo](https://0magnet.github.io/ansifilter-go/)** — paste escape codes, pick a format, and see both the generated markup and it rendered.
+**[Live demo](https://0magnet.github.io/ansifilter-go/)** — paste escape codes and see three things at once: the input as a terminal shows it, the chosen format rendered, and the markup it generated.
 
-![ansifilter-go in the browser](docs/ansifilter-go-demo.png "ANSI input, the rendered result, and the HTML ansifilter generates for it")
+![ansifilter-go in the browser](docs/ansifilter-go-demo.png "the same input as a terminal shows it, as the exported HTML renders, and the markup between them")
 
 The port is **byte-exact**: for every input and option combination tested it
 produces output identical to the C++ original.
