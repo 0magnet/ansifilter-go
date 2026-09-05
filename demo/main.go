@@ -36,7 +36,7 @@ const sample = "" +
 	"\n" +
 	"\x1b[31mred\x1b[0m \x1b[32mgreen\x1b[0m \x1b[33myellow\x1b[0m \x1b[34mblue\x1b[0m \x1b[35mmagenta\x1b[0m \x1b[36mcyan\x1b[0m\n" +
 	"\x1b[1mbold\x1b[0m \x1b[3mitalic\x1b[0m \x1b[4munderline\x1b[0m \x1b[7mreverse\x1b[0m\n" +
-	"\x1b[38;5;208m256-colour\x1b[0m \x1b[38;2;120;200;255mtruecolour\x1b[0m\n"
+	"\x1b[38;5;208m256-color\x1b[0m \x1b[38;2;120;200;255mtruecolor\x1b[0m\n"
 
 const greeting = "" +
 	"\x1b[1;36mansifilter-go\x1b[0m — the ANSI half, in the terminal it was written for\r\n" +

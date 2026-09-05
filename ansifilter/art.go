@@ -95,7 +95,7 @@ func (g *Generator) parseBinFile() {
 	}
 }
 
-// parseXBinFile decodes an XBIN image, honouring its optional palette, font
+// parseXBinFile decodes an XBIN image, honoring its optional palette, font
 // block and RLE compression.
 func (g *Generator) parseXBinFile() {
 	header, ok := g.readN(11)

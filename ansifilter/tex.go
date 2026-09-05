@@ -37,7 +37,7 @@ func newTeXGenerator() *texGenerator {
 	g := newGenerator(TEX)
 	t := &texGenerator{g}
 	g.f = t
-	// \leavevmode makes TeX honour every paragraph it encounters.
+	// \leavevmode makes TeX honor every paragraph it encounters.
 	g.newLineTag = "\\leavevmode\\par\n"
 	g.styleCommentOpen = "%"
 	g.spacer = "\\ "

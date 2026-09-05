@@ -308,17 +308,17 @@ func (g *Generator) SetColorMap(path string) error {
 		}
 		idx, err := strconv.Atoi(fields[0])
 		if err != nil {
-			return fmt.Errorf("ansifilter: bad colour map index %q", fields[0])
+			return fmt.Errorf("ansifilter: bad color map index %q", fields[0])
 		}
 		if idx > 15 {
-			return errors.New("ansifilter: colour map index out of range")
+			return errors.New("ansifilter: color map index out of range")
 		}
 		if len(fields) < 3 || fields[1] != "=" {
-			return errors.New("ansifilter: malformed colour map line")
+			return errors.New("ansifilter: malformed color map line")
 		}
 		code := fields[2]
 		if len(code) < 7 || code[0] != '#' {
-			return errors.New("ansifilter: malformed colour map value")
+			return errors.New("ansifilter: malformed color map value")
 		}
 		g.workingPalette[idx][0] = byte(hexInt(code[1:3]))
 		g.workingPalette[idx][1] = byte(hexInt(code[3:5]))
