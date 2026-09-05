@@ -19,7 +19,7 @@ import (
 
 const (
 	appEmail   = "a.simon@mailbox.org"
-	appWebsite = "http://andre-simon.de/"
+	appWebsite = "http://andre-simon.de/" //nolint:gosec // a URL, not a credential
 )
 
 // appVersion tracks the library version so -ldflags pins both at once.
@@ -684,7 +684,13 @@ func run(argv []string) int {
 	}
 
 	if o.applyDynStyles && !failure {
-		_ = generator.PrintDynamicStyleFile(outDirectory + "derived_styles.css")
+		// Reported like the other output failures above: without this a
+		// stylesheet that could not be written vanished silently, and the
+		// documents referencing it came out unstyled with a zero exit.
+		if err := generator.PrintDynamicStyleFile(outDirectory + "derived_styles.css"); err != nil {
+			fmt.Fprintf(os.Stderr, "could not write output: %s\n", sanitize(outDirectory+"derived_styles.css"))
+			failure = true
+		}
 	}
 
 	if failure {
@@ -719,19 +725,24 @@ func runTee(generator *af.Generator, o *options) int {
 	} else {
 		flags |= os.O_TRUNC
 	}
-	outFile, err := os.OpenFile(outFilePath, flags, 0o644)
+	outFile, err := os.OpenFile(outFilePath, flags, 0o644) //nolint:gosec // a document meant to be readable
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "could not write output: %s\n", sanitize(outFilePath))
 		return 1
 	}
-	defer outFile.Close()
+	defer outFile.Close() //nolint:errcheck // the write errors below are what carry a failure out
 
 	in := bufio.NewScanner(os.Stdin)
 	in.Buffer(make([]byte, 0, 64*1024), 16*1024*1024)
 	for in.Scan() {
 		buffer := in.Text()
 		fmt.Println(buffer)
-		_, _ = outFile.WriteString(generator.GenerateString(buffer))
+		if _, err := outFile.WriteString(generator.GenerateString(buffer)); err != nil {
+			// Without this a full disk truncated the output silently and still
+			// exited 0, so the copy looked complete.
+			fmt.Fprintf(os.Stderr, "could not write output: %s\n", sanitize(outFilePath))
+			return 1
+		}
 	}
 	return 0
 }

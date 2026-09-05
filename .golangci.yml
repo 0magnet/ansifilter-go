@@ -95,6 +95,14 @@ linters:
       - linters:
           - staticcheck
         text: "ST1005:" # error strings should not be capitalized
+      # ansifilter/ is a port of Andre Simon's ansifilter. Its arithmetic is
+      # deliberately narrowing, with ranges guaranteed by the algorithm rather than
+      # by the Go types, so G115 fires on nearly every conversion.
+      - linters:
+          - gosec
+        text: "G115:"
+        paths:
+          - ^ansifilter/
 issues:
   new: false
 formatters:

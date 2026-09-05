@@ -61,11 +61,11 @@ func html() string {
 // them. The terminal re-cats the file; the browser re-fetches the URL.
 func setInput(s string) {
 	current = s
-	if fs := term.FS(); fs != nil {
+	if fs := term.FS(); fs != nil { //nolint:errcheck,gosec,staticcheck // defensive: FS() cannot be nil in this build
 		afero := fs
 		if f, err := afero.Create(ansiPath); err == nil {
-			f.Write([]byte(s)) //nolint:errcheck // in-memory
-			f.Close()          //nolint:errcheck
+			f.Write([]byte(s)) //nolint:errcheck,gosec // in-memory
+			f.Close()          //nolint:errcheck,gosec
 		}
 	}
 	if shell != nil {
@@ -106,10 +106,10 @@ func main() {
 		return js.Global().Get("Promise").Call("resolve", resp)
 	}))
 
-	if fs := term.FS(); fs != nil {
+	if fs := term.FS(); fs != nil { //nolint:errcheck,gosec,staticcheck
 		if f, err := fs.Create(ansiPath); err == nil {
-			f.Write([]byte(sample)) //nolint:errcheck // in-memory
-			f.Close()               //nolint:errcheck
+			f.Write([]byte(sample)) //nolint:errcheck,gosec // in-memory
+			f.Close()               //nolint:errcheck,gosec
 		}
 	}
 
@@ -135,9 +135,9 @@ func main() {
 	// Tiled rather than cascaded: the point is seeing the three at once.
 	w, h := deskSize()
 	half := w / 2
-	desk.LaunchOpts("input", desk.Options{X: 8, Y: 8, Width: half - 16, Height: h/2 - 16})    //nolint:errcheck
-	desk.LaunchOpts("term", desk.Options{X: 8, Y: h / 2, Width: half - 16, Height: h/2 - 16}) //nolint:errcheck
-	desk.LaunchOpts("browser", desk.Options{X: half, Y: 8, Width: half - 16, Height: h - 24}) //nolint:errcheck
+	desk.LaunchOpts("input", desk.Options{X: 8, Y: 8, Width: half - 16, Height: h/2 - 16})    //nolint:errcheck,gosec
+	desk.LaunchOpts("term", desk.Options{X: 8, Y: h / 2, Width: half - 16, Height: h/2 - 16}) //nolint:errcheck,gosec
+	desk.LaunchOpts("browser", desk.Options{X: half, Y: 8, Width: half - 16, Height: h - 24}) //nolint:errcheck,gosec
 
 	select {}
 }
