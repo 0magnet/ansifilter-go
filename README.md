@@ -4,7 +4,7 @@ A Go port of [ansifilter](https://gitlab.com/saalen/ansifilter) 2.23 by André
 Simon. It converts text containing ANSI terminal escape codes into text, HTML,
 Pango markup, LaTeX, plain TeX, RTF, BBCode or SVG.
 
-**[Live demo](https://0magnet.github.io/ansifilter-go/)** — the same input in both renderers at once: the ANSI in a real terminal, the exported HTML in a real browser.
+**[Live demo](https://ansifilter-go.magnetosphere.net/)** — the same input in both renderers at once: the ANSI in a real terminal, the exported HTML in a real browser.
 
 ![ansifilter-go in the browser](docs/ansifilter-go-demo.png "three windows on a desk: the ANSI input, a websh terminal showing it rendered, and netscrape showing the exported HTML")
 
