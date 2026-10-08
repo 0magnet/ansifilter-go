@@ -22,6 +22,9 @@ It lives in its own module under `demo/`, so none of that reaches this
 library: `go.mod` here still has no dependencies, and the graph below is still
 the port's own.
 
+`build.sh` builds it into `docs/` with the standard Go toolchain, and the
+`demo` workflow (`.github/workflows/demo.yml`) runs it on push and commits the result.
+
 The port is **byte-exact**: for every input and option combination tested it
 produces output identical to the C++ original.
 
@@ -158,10 +161,17 @@ gocloc --not-match-d='(vendor|node_modules|\.git)' .
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
-Go                              15            384            346           3597
-YAML                             1              0              7             98
-Markdown                         1             31              0             88
+Go                              18            418            405           3790
+JavaScript                       1             61             36            478
+Markdown                         1             44              0            126
+Makefile                         1             21             52            111
+YAML                             1              0             10            103
+HTML                             1              0              4             56
+JSON                             1              0              0              8
+Bourne Shell                     1              1              6              7
+XML                              1              0              0              4
+Plain Text                       1              1              0              3
 -------------------------------------------------------------------------------
-TOTAL                           17            415            353           3783
+TOTAL                           27            546            513           4686
 -------------------------------------------------------------------------------
 ```
