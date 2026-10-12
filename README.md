@@ -144,7 +144,9 @@ Original ansifilter is copyright © 2007-2026 André Simon
 Made with [goda](https://github.com/loov/goda):
 
 ```
-go run github.com/loov/goda@latest graph github.com/0magnet/ansifilter-go/... | dot -Tsvg -o docs/ansifilter-go-goda-graph.svg
+# GOOS=js: the import edges of a wasm program live in js/wasm-tagged
+# files and are invisible to a host-context run
+GOOS=js GOARCH=wasm go run github.com/loov/goda@latest graph github.com/0magnet/ansifilter-go/... | dot -Tsvg -o docs/ansifilter-go-goda-graph.svg
 ```
 
 ![Dependency Graph](docs/ansifilter-go-goda-graph.svg "github.com/0magnet/ansifilter-go Dependency Graph")
@@ -163,15 +165,15 @@ Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
 Go                              18            418            405           3790
 JavaScript                       1             61             36            478
-Markdown                         1             44              0            126
+Markdown                         1             44              0            135
 Makefile                         1             21             52            111
 YAML                             1              0             10            103
 HTML                             1              0              4             56
+Bourne Shell                     2              9             23             38
 JSON                             1              0              0              8
-Bourne Shell                     1              1              6              7
 XML                              1              0              0              4
 Plain Text                       1              1              0              3
 -------------------------------------------------------------------------------
-TOTAL                           27            546            513           4686
+TOTAL                           28            554            530           4726
 -------------------------------------------------------------------------------
 ```
