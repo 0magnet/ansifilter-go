@@ -38,11 +38,6 @@ const sample = "" +
 	"\x1b[1mbold\x1b[0m \x1b[3mitalic\x1b[0m \x1b[4munderline\x1b[0m \x1b[7mreverse\x1b[0m\n" +
 	"\x1b[38;5;208m256-color\x1b[0m \x1b[38;2;120;200;255mtruecolor\x1b[0m\n"
 
-const greeting = "" +
-	"\x1b[1;36mansifilter-go\x1b[0m — the ANSI half, in the terminal it was written for\r\n" +
-	"\x1b[2mthe shell is \x1b[0m\x1b[1mwebsh\x1b[0m\x1b[2m; the input is a file, so it can be \x1b[0m\x1b[1mcat\x1b[0m\x1b[2med\x1b[0m\r\n\r\n" +
-	"\x1b[2medit it in the input window · the browser beside this shows the exported HTML\x1b[0m\r\n\r\n"
-
 var (
 	shell   *term.Pane
 	current = sample
@@ -122,7 +117,7 @@ func main() {
 		Name: "term", Title: "terminal — the ANSI", Help: "a websh shell; cat the input",
 		Width: 620, Height: 420,
 		Open: func([]string) (desk.Pane, error) {
-			shell = term.New(greeting, "ansifilter").Run("cat " + ansiPath)
+			shell = term.New("", "ansifilter").Run("cat " + ansiPath)
 			return shell, nil
 		},
 	})
