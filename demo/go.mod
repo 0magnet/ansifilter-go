@@ -11,9 +11,9 @@ module github.com/0magnet/ansifilter-go/demo
 go 1.26.6
 
 require (
-	github.com/0magnet/ansifilter-go v0.0.1-0.20261018095318-f1fa40da179f
-	github.com/0magnet/desk v0.0.3-0.20261019110232-abe55b2f7e4a
-	github.com/0magnet/desk/panes v0.0.1-0.20261019105912-780876a0f3ee
+	github.com/0magnet/ansifilter-go v0.0.1-0.20261019110421-ceba403569d2
+	github.com/0magnet/desk v0.0.3-0.20261020101438-0b6b4270b7f2
+	github.com/0magnet/desk/panes v0.0.1-0.20261020101438-0b6b4270b7f2
 	github.com/0magnet/netscrape v0.0.1-0.20261013224547-9fae42cd783b
 )
 
