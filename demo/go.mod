@@ -11,9 +11,9 @@ module github.com/0magnet/ansifilter-go/demo
 go 1.26.6
 
 require (
-	github.com/0magnet/ansifilter-go v0.0.1-0.20261030113810-2b14ea91bf8c
-	github.com/0magnet/desk v0.0.3-0.20261031110845-bf4170ac642f
-	github.com/0magnet/desk/panes v0.0.1-0.20261031110505-95ae1a6c1b74
+	github.com/0magnet/ansifilter-go v0.0.1-0.20261031111009-6968bb0aaded
+	github.com/0magnet/desk v0.0.3-0.20261101120515-710b516c9541
+	github.com/0magnet/desk/panes v0.0.1-0.20261101120219-2ac1578c28cd
 	github.com/0magnet/netscrape v0.0.1-0.20261013224547-9fae42cd783b
 )
 
@@ -28,7 +28,7 @@ require (
 	github.com/benhoyt/goawk v1.32.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
 	github.com/dustin/go-humanize v1.1.0 // indirect
-	github.com/itchyny/gojq v0.12.19 // indirect
+	github.com/itchyny/gojq v0.12.20 // indirect
 	github.com/itchyny/timefmt-go v0.1.9 // indirect
 	github.com/mattn/go-runewidth v0.0.31 // indirect
 	golang.org/x/sys v0.49.0 // indirect
