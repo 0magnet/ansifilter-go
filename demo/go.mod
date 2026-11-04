@@ -11,9 +11,9 @@ module github.com/0magnet/ansifilter-go/demo
 go 1.26.6
 
 require (
-	github.com/0magnet/ansifilter-go v0.0.1-0.20261102143311-518b7996910a
-	github.com/0magnet/desk v0.0.3-0.20261103130328-f539f16cc1a7
-	github.com/0magnet/desk/panes v0.0.1-0.20261103125926-bf46879ed37c
+	github.com/0magnet/ansifilter-go v0.0.1-0.20261104020740-6f46d3b5d79d
+	github.com/0magnet/desk v0.0.3-0.20261104131501-ff3eb8229603
+	github.com/0magnet/desk/panes v0.0.1-0.20261104131123-0146173cce90
 	github.com/0magnet/netscrape v0.0.1-0.20261013224547-9fae42cd783b
 )
 
@@ -22,7 +22,7 @@ require (
 	github.com/0magnet/bottle v0.0.1-0.20261028202309-2b922f28f74e // indirect
 	github.com/0magnet/sh/v3 v3.13.2-0.20261024150911-145e01c63128 // indirect
 	github.com/0magnet/u-root v0.16.1-0.20261003214924-44e47b732754 // indirect
-	github.com/0magnet/websh v0.0.1-0.20261103125818-413e7491e7e6 // indirect
+	github.com/0magnet/websh v0.0.1-0.20261104023937-24105bd23c12 // indirect
 	github.com/0magnet/winbox-go v0.0.1-0.20261028211148-34d6e7c4492d // indirect
 	github.com/0magnet/xterm-go v0.0.1-0.20261102175652-6023ed24df89 // indirect
 	github.com/benhoyt/goawk v1.32.0 // indirect
