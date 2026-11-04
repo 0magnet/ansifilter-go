@@ -40,13 +40,13 @@ jobs:
       # No TinyGo here: this demo is a stdlib Go build (docs/wasm_exec.js is
       # Go's, not TinyGo's).
       #
-      # The version comes from demo/go.mod, not the root one. The demo is its
-      # own module and requires a newer Go than the library does, and setup-go
-      # sets GOTOOLCHAIN=local — so pointing at the root go.mod installed Go
-      # 1.24 and then refused to fetch the 1.26 the demo asks for.
+      # The newest Go. A go.mod's line is the floor a module needs, and
+      # setup-go sets GOTOOLCHAIN=local, so taking the version from one builds
+      # with that floor and never anything newer (from the root go.mod it
+      # installed Go 1.24 and then refused to fetch the 1.26 the demo needs).
       - uses: actions/setup-go@v6
         with:
-          go-version-file: demo/go.mod
+          go-version: stable
 
       - name: build the demo into docs/
         run: sh build.sh
