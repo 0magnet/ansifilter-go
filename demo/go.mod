@@ -11,10 +11,10 @@ module github.com/0magnet/ansifilter-go/demo
 go 1.26.6
 
 require (
-	github.com/0magnet/ansifilter-go v0.0.1-0.20261107115845-cd2ef2981f4a
-	github.com/0magnet/desk v0.0.3-0.20261108120756-ff2b91fdb3f8
-	github.com/0magnet/desk/panes v0.0.1-0.20261108120443-c2df42133522
-	github.com/0magnet/netscrape v0.0.1-0.20261106130345-a8165604cf34
+	github.com/0magnet/ansifilter-go v0.0.1-0.20261108121110-76d820dfea86
+	github.com/0magnet/desk v0.0.3-0.20261109140939-f687736131a0
+	github.com/0magnet/desk/panes v0.0.1-0.20261109140655-fe77a2fc5388
+	github.com/0magnet/netscrape v0.0.1-0.20261109140215-eea240f3d380
 )
 
 require (
@@ -22,8 +22,8 @@ require (
 	github.com/0magnet/bottle v0.0.1-0.20261028202309-2b922f28f74e // indirect
 	github.com/0magnet/sh/v3 v3.13.2-0.20261024150911-145e01c63128 // indirect
 	github.com/0magnet/u-root v0.16.1-0.20261003214924-44e47b732754 // indirect
-	github.com/0magnet/websh v0.0.1-0.20261106131606-1973f8bee280 // indirect
-	github.com/0magnet/winbox-go v0.0.1-0.20261106130421-357df562ff6c // indirect
+	github.com/0magnet/websh v0.0.1-0.20261109140532-a1665393304f // indirect
+	github.com/0magnet/winbox-go v0.0.1-0.20261109140257-4c5c0e948cd6 // indirect
 	github.com/0magnet/xterm-go v0.0.1-0.20261102175652-6023ed24df89 // indirect
 	github.com/benhoyt/goawk v1.32.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
@@ -31,7 +31,7 @@ require (
 	github.com/itchyny/gojq v0.12.20 // indirect
 	github.com/itchyny/timefmt-go v0.1.9 // indirect
 	github.com/mattn/go-runewidth v0.0.31 // indirect
-	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/sys v0.50.0 // indirect
 	golang.org/x/term v0.47.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
 )
