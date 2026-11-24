@@ -11,9 +11,9 @@ module github.com/0magnet/ansifilter-go/demo
 go 1.26.6
 
 require (
-	github.com/0magnet/ansifilter-go v0.0.1-0.20261123110705-1f362b348ba5
-	github.com/0magnet/desk v0.0.3-0.20261123162206-9485e15c9acf
-	github.com/0magnet/desk/panes v0.0.1-0.20261123161853-28778df914b5
+	github.com/0magnet/ansifilter-go v0.0.1-0.20261123162734-72a96578246b
+	github.com/0magnet/desk v0.0.3-0.20261124162943-5a94801eada7
+	github.com/0magnet/desk/panes v0.0.1-0.20261124162518-6775686f1d7a
 	github.com/0magnet/netscrape v0.0.1-0.20261123161054-ce45115bc0c9
 )
 
@@ -22,8 +22,8 @@ require (
 	github.com/0magnet/bottle v0.0.1-0.20261028202309-2b922f28f74e // indirect
 	github.com/0magnet/sh/v3 v3.13.2-0.20261024150911-145e01c63128 // indirect
 	github.com/0magnet/u-root v0.16.1-0.20261003214924-44e47b732754 // indirect
-	github.com/0magnet/websh v0.0.1-0.20261123161609-45d906fd391f // indirect
-	github.com/0magnet/winbox-go v0.0.1-0.20261123161147-35767eea845c // indirect
+	github.com/0magnet/websh v0.0.1-0.20261124162130-3e2dd700684d // indirect
+	github.com/0magnet/winbox-go v0.0.1-0.20261123161251-43842cba2e0c // indirect
 	github.com/0magnet/xterm-go v0.0.1-0.20261123110635-ef9c274ca8f7 // indirect
 	github.com/benhoyt/goawk v1.32.0 // indirect
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
